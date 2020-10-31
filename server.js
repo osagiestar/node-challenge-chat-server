@@ -94,6 +94,6 @@ app.get("/messages/latest", (request, response) => {
 });
 
 // Start Listening on : 3002 //
-app.listen(3002, function () {
+app.listen(process.env.PORT, function () {
   console.log("Server is listening on port 3002. Ready to accept requests!");
 });
