@@ -88,6 +88,7 @@
     );
   });
 
+  // Slice method to read only the most recent 10 messages //
   app.get("/messages/latest", (request, response) => {
     response.json(messages.slice(-10));
   });
