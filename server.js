@@ -84,7 +84,7 @@ app.delete("/message/:Id", (req, res) => {
 app.get("/message/search", (request, response) => {
   const search = request.query.term; 
 response.json(messages.filter((message) => 
-message.text.toLowerCase().contains(search.toLowerCase())
+message.text.toLowerCase().includes(search.toLowerCase())
 ))
 });
 
