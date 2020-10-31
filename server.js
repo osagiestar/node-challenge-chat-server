@@ -8,16 +8,13 @@ app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-const welcomeMessage = {
-  id: 0,
-  from: "Bart",
-  text: "Welcome to CYF chat system!",
-};
-
+const messages = require("./messages.json")
+  
 //This array is our "data store".
 //We will start with one message in the array.
 //Note: messages will be lost when Glitch restarts our server.
-const messages = [welcomeMessage];
+
+// const messages = [welcomeMessage];
 
 // Base route path // 
 app.get("/", function (request, response) {
@@ -30,21 +27,22 @@ app.get("/messages/", (request, response) => {
 });
 
 // Obtains the chat message based on the Id //
-app.get("/messages/:id", (request, response) => {
+app.get("/message/:id", (request, response) => {
   const Id = request.params.id; // <- {Id:value}
 
-  const Message = messages.find((e) => e.id == Id);
+  const findMessage = messages.find((e) => e.id == Id);
 
-  if (Message) {
-    response.json(Message);
+  if (findMessage) {
+    response.json(findMessage);
   } else {
     response.send("Message not found");
   }
 });
 
 // Allows the assignment of a new message Id by increment of 1 //
-let newId = 1;
-app.post("/messages/", (req, res) => {
+ let newId = 22;
+app.post("/message/", (req, res) => {
+ 
   const message = {};
   message.id = newId;
   message.from = req.body.from;
@@ -71,7 +69,7 @@ app.post("/messages/", (req, res) => {
 });
 
 // A message can be deleted based on the defined Id //
-app.delete("/messages/:Id", (req, res) => {
+app.delete("/message/:Id", (req, res) => {
   const { Id } = req.params;
   messages.forEach((e) => {
     if (e.id == Id) {
@@ -83,23 +81,19 @@ app.delete("/messages/:Id", (req, res) => {
 });
 
 // Search for messages based on the text input //
-app.get("/messages/search", (request, response) => {
-  const search = request.query.text; 
+app.get("/message/search", (request, response) => {
+  const search = request.query.term; 
 response.json(messages.filter((message) => 
 message.text.toLowerCase().contains(search.toLowerCase())
 ))
 });
 
 app.get("/messages/latest", (request, response) => {
-  const readMsg = request.query.latest; 
-  msgArr = [];
-  msgArr.push(messages.slice(Math.max(arr.length - 10, 1)))
-  response.json(msgArr)
+  response.json(messages.slice(-10));
+  // response.send("Give it up");
+});
 
-}).
-
-
-// Start Listening on : 3000 //
-app.listen(3000, function () {
-  console.log("Server is listening on port 3000. Ready to accept requests!");
+// Start Listening on : 3002 //
+app.listen(3002, function () {
+  console.log("Server is listening on port 3002. Ready to accept requests!");
 });
