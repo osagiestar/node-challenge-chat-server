@@ -42,12 +42,13 @@
   // Allows the assignment of a new message Id by increment of 1 //
   let newId = 22;
   app.post("/message/", (req, res) => {
-    const timeSent = new Date();
+    // const timeSent = new Date();
     const message = {};
     message.id = newId;
     message.from = req.body.from;
     message.text = req.body.text;
-    message.timeSent = req.body.timeSent;
+    message.timeSent = req.body.timeSent; 
+    //OR message.timeSent = new Date(); //
 
     // destructuring the above code //
     //  const message = {} ;
